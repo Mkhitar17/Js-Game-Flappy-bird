@@ -1,0 +1,336 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    transition: 0.5s ease-in;
+}
+
+body:hover {
+    background: #cb0a0ae4;
+    z-index: 1;
+
+}
+
+.game {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: url(images/bg.webp) 0 100% / cover;
+    /* border-top: 1px solid; */
+    /* animation: bg 7s linear infinite; */
+    --bg: 0;
+
+}
+
+.game::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, var(--bg));
+    transition: 4s;
+}
+
+.game .floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(images/bg.webp) 0 100% / cover;
+    /* border-top: 1px solid #000; */
+    /* animation: bg 5s linear infinite; */
+}
+
+@keyframes bg {
+    to {
+        background-position-x: -100vw;
+    }
+}
+
+.game .bird,
+.game .enemyBird {
+    position: absolute;
+    top: 80px;
+    left: 150px;
+    width: 77px;
+    height: 51px;
+    background: url(images/bird.gif) no-repeat -6px -10px / 90px 72px;
+    border-radius: 30px 30px 11px 20px;
+    transition: .1s;
+    /* border: 1px solid; */
+}
+
+.game .enemyBird {
+    left: auto;
+    right: -500px;
+    scale: -1 1;
+    filter: invert(1) hue-rotate(240deg);
+    animation: pipe 4s linear infinite;
+    transition: 6s;
+}
+
+.game h3 {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    translate: -50% -80%;
+    text-transform: capitalize;
+    font: bold 7rem cursive;
+    white-space: nowrap;
+    opacity: 0;
+    transition: .8s;
+    text-shadow: -5px 4px 3px  black , -5px 9px 6px white;
+}
+
+.game .pipe {
+    position: absolute;
+    right: -150px;
+    width: 135px;
+    height: 25%;
+    background: url(images/pipe.png) no-repeat 0px 0px / 135px 100%;
+    animation: pipe 6s linear infinite;
+}
+
+.game .pipe.top {
+    top: 0;
+    scale: 1 -1;
+}
+
+.game .pipe.bottom {
+    bottom: 97px;
+}
+
+@keyframes pipe {
+    to {
+        right: 100%;
+    }
+}
+
+.game .pipe.press {
+    animation: pipe 6s linear 2s infinite, press 4s infinite;
+}
+
+@keyframes press {
+    35% {
+        height: 25%;
+    }
+
+    48%,
+    58% {
+        height: calc(50% - 48.5px);
+    }
+
+    65% {
+        height: 25%;
+    }
+}
+
+.game .pipe.three {
+    animation-delay: 4s;
+}
+
+.game .display {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.game .display h2 {
+    text-shadow: -3px 2px 3px #fff, -3px 5px 6px #000;
+    font: bold 26px ;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(images/menu.jpg) center bottom / 30% 100%;
+    animation: menu 2.5s infinite;
+    z-index: 1;
+    transition: .5s;
+}
+
+@keyframes menu {
+    50% {
+        background-size: 60% 200%;
+        background-position: center 80%;
+    }
+}
+
+.menu .menuPipe {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 270px;
+    height: 390px;
+    background: url(images/pipe.png) no-repeat center / contain;
+    z-index: 3;
+}
+
+.menu .menuPipe .play {
+    background: url(images/pipe.png) no-repeat center top / cover;
+    height: 100px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: .5s;
+    margin-bottom: 7rem;
+
+}
+
+.menu .menuPipe .play:hover {
+    background-position-y: -100px;
+}
+
+.menu .menuPipe .play:active {
+    background-position-y: 100px;
+}
+
+.menu .menuPipe :is(h5, h6) {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+}
+
+.menu h1 {
+    text-align: center;
+    width: 80%;
+    margin: 5% auto;
+    font-size: 45px;
+    border-radius: 50px;
+    background: linear-gradient(rgba(255, 255, 255, 0.746), rgba(0, 128, 0, 0), rgba(255, 253, 253, 0.717));
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: black;
+    -webkit-text-stroke: green 2px;
+    animation: gameName 1.3s infinite;
+    overflow: hidden;
+}
+
+@keyframes gameName {
+    40% {
+        background-position-y: 0;
+    }
+
+    50% {
+        scale: 1.3;
+    }
+
+    60% {
+        background-position-y: 0;
+    }
+
+    to {
+        background-position-y: 240px;
+
+    }
+}
+
+.menu :is(.birdMenu, .enemyBirdMenu) {
+    height: 200px;
+    position: absolute;
+    top: 30%;
+    transform: translateX(calc(-50% - var(--chor))) scale(var(--grox));
+    animation: goBird 2s forwards;
+}
+
+.menu .birdMenu {
+    --chor: 270px;
+    --grox: 1;
+    left: -50%;
+}
+
+.menu .enemyBirdMenu {
+    --chor: -270px;
+    --grox: -1, 1;
+    left: 150%;
+    filter: invert(3) hue-rotate(240deg);
+
+}
+
+@keyframes goBird {
+    to {
+        left: 50%;
+    }
+}
+
+.menu h3 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 35%;
+    z-index: 0;
+    letter-spacing: -30px;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 55px;
+    text-shadow: 0 3px 2px black;
+    -webkit-text-stroke: 3px black;
+    animation: names 2s forwards;
+}
+
+
+
+.menu h3:nth-child(2) {
+    animation-delay: 2s;
+}
+
+.menu h3:nth-child(3) {
+    animation-delay: 4s;
+}
+
+.menu h3:nth-child(4) {
+    animation-delay: 6s;
+}
+
+.menu h3:nth-child(5) {
+    animation-delay: 8s;
+}
+
+.menu h3:nth-child(6) {
+    animation-delay: 10s;
+}
+
+.menu h3:nth-child(7) {
+    animation-delay: 12s;
+}
+
+.menu h3:nth-child(8) {
+    animation-delay: 14s;
+}
+
+@keyframes names {
+    20% {
+        bottom: 45%;
+        letter-spacing: 0;
+    }
+
+    40% {
+        bottom: 75%;
+    }
+
+    60% {
+        opacity: 1;
+        z-index: 2;
+    }
+
+    100% {
+        opacity: 0;
+        letter-spacing: 0;
+        bottom: 65%;
+    }
+}
